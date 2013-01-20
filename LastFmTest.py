@@ -28,7 +28,17 @@ class BackgroundManagerTest(unittest.TestCase):
 class ImageUpdaterTest(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.image_updater = ImageUpdater()
+
+    def test_open_unexisting_image(self):
+        self.assertRaises(IOError,self.image_updater.open_image,'notexisting.foo')
+
+    def test_overlay_text(self):
+        self.image_updater.set_font_properties()
+        self.text = self.image_updater.create_text_image('Hello!')
+        self.base = self.image_updater.open_image('blue_eyes.jpg')
+        self.base = self.image_updater.add_text_image(self.base, self.text)
+        self.base.show()
 
     def tearDown(self):
         pass
